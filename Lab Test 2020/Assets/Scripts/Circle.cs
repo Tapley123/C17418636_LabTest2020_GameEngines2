@@ -5,8 +5,8 @@ using UnityEngine;
 public class Circle : MonoBehaviour
 {
     public GameObject tLightPrefab;
-    [SerializeField] int amountOfLights = 10;
-    [SerializeField] private GameObject[] traficLights;
+    private int amountOfLights = 10;
+    private GameObject[] traficLights;
     
 
     void Start()
@@ -22,11 +22,5 @@ public class Circle : MonoBehaviour
             tLightInstance.transform.position = Vector3.forward * 10;
             traficLights[i] = tLightInstance;
         }
-    }
-
-    
-    void Update()
-    {
-
     }
 }
