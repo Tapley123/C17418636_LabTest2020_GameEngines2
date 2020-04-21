@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class ColourChanger : MonoBehaviour
 {
+    /// <summary>
+    /// ///////////////only have the green bool*(**********
+    /// </summary>
+
     private Renderer r;
     private Color[] colours = new Color[3]; //0 =  green, 1 = yellow, 2 = red
-    public static bool green = false, yellow = false, red = false;
+    public bool green = false;
     private int rnum;
+    private Circle circle;
+    GameObject go;
 
     private void Awake()
     {
+        circle = GetComponentInParent<Circle>();
         r = GetComponent<Renderer>();
         colours[0] = new Color(0, 255, 0); //green
         colours[1] = new Color(255, 255, 0); //yellow
         colours[2] = new Color(255, 0, 0); //red
+        go = GetComponent<GameObject>();
     }
 
     void Start()
@@ -25,30 +33,20 @@ public class ColourChanger : MonoBehaviour
         if(colourPicker == 0)
         {
             green = true;
-            yellow = false;
-            red = false;
-
             StartCoroutine(GreenCoroutine());
         }
             
         if (colourPicker == 1)
         {
             green = false;
-            yellow = true;
-            red = false;
-
             StartCoroutine(YellowCoroutine()); StartCoroutine(YellowCoroutine());
         }
             
         if (colourPicker == 2)
         {
             green = false;
-            yellow = false;
-            red = true;
-
             StartCoroutine(RedCoroutine());
         }
-        yellow = true;
     }
 
     private int RandomNumber()
@@ -61,12 +59,12 @@ public class ColourChanger : MonoBehaviour
     IEnumerator GreenCoroutine()
     {
         r.material.color = colours[0];
+        //circle.greenLights.Add(go);
 
         yield return new WaitForSeconds(Random.Range(5, 10));
 
+        //circle.greenLights.Remove(go);
         green = false;
-        yellow = true;
-        red = false;
         StartCoroutine(YellowCoroutine());
     }
 
@@ -77,8 +75,6 @@ public class ColourChanger : MonoBehaviour
         yield return new WaitForSeconds(4);
 
         green = false;
-        yellow = false;
-        red = true;
         StartCoroutine(RedCoroutine());
     }
 
@@ -89,8 +85,6 @@ public class ColourChanger : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(5, 10));
 
         green = true;
-        yellow = false;
-        red = false;
         StartCoroutine(GreenCoroutine());
     }
 }
