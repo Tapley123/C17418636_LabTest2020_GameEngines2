@@ -20,21 +20,25 @@ public class MoveToLight : CarClass
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        animator.SetFloat("distance", Vector3.Distance(circle.greenLights[currentMovePoint].transform.position, car.transform.position)); //making the distance variable from the animator = the distance between the player and the green light
+
         if (circle.greenLights.Count == 0) //******************************************************************************PUT STATE IF THERE ARE NO GREEN LIGHTS HERE!!!!!
             return; //if there are no green lights dont run
 
-        if (Vector3.Distance(circle.greenLights[currentMovePoint].transform.position, car.transform.position) < accuracy) //if the car has gotten within the close distance of the light
-            animator.SetTrigger("LookForLight"); //change to the look for light state
+        if (Vector3.Distance(circle.greenLights[currentMovePoint].transform.position, 
+                            car.transform.position) <= accuracy) //if the car has gotten within the close distance of the light
+        {
+           //Debug.Log("At Light");
+            animator.SetBool("move", false);
+        }
+            
 
         var direction = circle.greenLights[currentMovePoint].transform.position - car.transform.position; //get the direction
         car.transform.rotation = Quaternion.Slerp(car.transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime); //slerp the rotation of the car to face the green light it is going towards
 
         car.transform.Translate(0, 0, Time.deltaTime * moveSpeed); //move the car forward by the movespeed
-    }
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        
+        Debug.DrawLine(car.transform.position, circle.greenLights[currentMovePoint].transform.position, Color.blue); //draw a line from the car to the green light it is targeting
+
     }
 }

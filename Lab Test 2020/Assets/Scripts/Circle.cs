@@ -5,7 +5,7 @@ using UnityEngine;
 public class Circle : MonoBehaviour
 {
     public GameObject tLightPrefab; //traffic light gameobject prefab
-    private int amountOfLights = 10; 
+    [SerializeField] private int amountOfLights = 10; 
     public GameObject[] traficLights; //array of treaffic light
     public List<GameObject> greenLights; //list of green traffic lights
     
