@@ -6,8 +6,8 @@ public class Circle : MonoBehaviour
 {
     public GameObject tLightPrefab; //traffic light gameobject prefab
     private int amountOfLights = 10; 
-    public static GameObject[] traficLights; //array of treaffic light
-    public static List<GameObject> greenLights; //list of green traffic lights
+    public GameObject[] traficLights; //array of treaffic light
+    public List<GameObject> greenLights; //list of green traffic lights
     
 
     void Start()
