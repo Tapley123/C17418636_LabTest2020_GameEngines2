@@ -2,13 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColourStateMachine : MonoBehaviour
+public class ColourChanger : MonoBehaviour
 {
     private Renderer r;
+    private Color[] colours = new Color[3]; //0 =  green, 1 = yellow, 2 = red
+
+    private void Awake()
+    {
+        r = GetComponent<Renderer>();
+        colours[0] = new Color(0, 255, 0); //green
+        colours[1] = new Color(255, 255, 0); //yellow
+        colours[2] = new Color(255, 0, 0); //red
+    }
 
     void Start()
     {
-        r = GetComponent<Renderer>();
+        r.material.color = colours[Random.Range(0, 3)];
     }
 
     void Update()
@@ -20,19 +29,19 @@ public class ColourStateMachine : MonoBehaviour
 
     IEnumerator GreenCoroutine()
     {
-        r.material.color = new Color(0, 255, 0);
+        r.material.color = colours[0];
         yield return new WaitForSeconds(Random.Range(5, 10));
     }
 
     IEnumerator YellowCoroutine()
     {
-        r.material.color = new Color(255, 255, 0);
+        r.material.color = colours[1];
         yield return new WaitForSeconds(4);
     }
 
     IEnumerator RedCoroutine()
     {
-        r.material.color = new Color(255, 0 ,0);
+        r.material.color = colours[2];
         yield return new WaitForSeconds(Random.Range(5, 10));
     }
 }
