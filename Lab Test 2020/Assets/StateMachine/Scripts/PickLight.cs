@@ -21,17 +21,18 @@ public class PickLight : CarClass
     {
         base.OnStateEnter(animator, stateInfo, layerIndex); //run the onstart for the CarClass script 
         target = null;
+        currentMovePoint = Random.Range(0, circle.greenLights.Count); //select a random green light
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        currentMovePoint = Random.Range(0, circle.greenLights.Count); //select a random green light
+        if(currentMovePoint > circle.greenLights.Count) //if the random number is outside the index of the green lights list
+            currentMovePoint = Random.Range(0, circle.greenLights.Count); //select a random green light
+
         target = circle.greenLights[currentMovePoint].transform;
 
-        if(target != null)
+        if (target != null)
             animator.SetBool("move", true);
-
-        Debug.Log(target);
     }
 }
