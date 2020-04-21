@@ -7,10 +7,12 @@ public class PickLight : CarClass
     private bool lightpicked;
     private Circle circle;
     public static Transform target;
+    public static Transform center;
 
     private void Awake()
     {
         circle = GameObject.Find("circle").GetComponent<Circle>();
+        center = GameObject.Find("Center").transform;
     }
 
     
@@ -20,7 +22,7 @@ public class PickLight : CarClass
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex); //run the onstart for the CarClass script 
-        target = null;
+        target = center;
         currentMovePoint = Random.Range(0, circle.greenLights.Count); //select a random green light
     }
 
@@ -32,7 +34,7 @@ public class PickLight : CarClass
 
         target = circle.greenLights[currentMovePoint].transform;
 
-        if (target != null)
+        if (target != center)
             animator.SetBool("move", true);
     }
 }

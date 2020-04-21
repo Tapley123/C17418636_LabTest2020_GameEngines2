@@ -20,17 +20,21 @@ public class MoveToLight : CarClass
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (circle.greenLights.Count == 0) //******************************************************************************PUT STATE IF THERE ARE NO GREEN LIGHTS HERE!!!!!
-            return; //if there are no green lights dont run
+        if (PickLight.target == PickLight.center)
+            return;
 
-        if (Vector3.Distance(PickLight.target.position, 
-                            car.transform.position) <= accuracy) //if the car has gotten within the close distance of the light
+        if (circle.greenLights.Count == 0) //if there are no green lights
+            animator.SetBool("move", false);
+
+
+        if (Vector3.Distance(PickLight.target.position, car.transform.position) <= accuracy) //if the car has gotten within the close distance of the light
         {
             animator.SetBool("move", false);
         }
             
+            
 
-        var direction = PickLight.target.position - car.transform.position; //get the direction
+        Vector3 direction = PickLight.target.position - car.transform.position; //get the direction
         car.transform.rotation = Quaternion.Slerp(car.transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime); //slerp the rotation of the car to face the green light it is going towards
 
         car.transform.Translate(0, 0, Time.deltaTime * moveSpeed); //move the car forward by the movespeed
